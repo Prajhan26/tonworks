@@ -124,6 +124,24 @@ export function BountyActions({ bounty: initialBounty }: Props) {
     [canClaim, canSubmit],
   );
 
+  async function refreshBountyFromServer() {
+    const response = await fetch(`/api/bounties/${initialBounty.id}`, {
+      method: "GET",
+      cache: "no-store",
+    });
+
+    const payload = (await response.json()) as {
+      bounty?: Bounty;
+    };
+
+    if (response.ok && payload.bounty) {
+      setBounty(payload.bounty);
+      return payload.bounty;
+    }
+
+    return null;
+  }
+
   async function mutate(path: string, body?: Record<string, unknown>) {
     setBusy(path);
     setStatusMessage(null);
@@ -147,7 +165,15 @@ export function BountyActions({ bounty: initialBounty }: Props) {
       router.refresh();
       setStatusMessage(`Updated status: ${payload.bounty.status}`);
     } catch (error) {
-      setStatusMessage(error instanceof Error ? error.message : "Action failed.");
+      const latestBounty = await refreshBountyFromServer();
+      const message = error instanceof Error ? error.message : "Action failed.";
+
+      if (latestBounty) {
+        setStatusMessage(`${message} Latest server state: ${latestBounty.status}.`);
+        router.refresh();
+      } else {
+        setStatusMessage(message);
+      }
     } finally {
       setBusy(null);
     }
