@@ -46,12 +46,18 @@ export default async function HomePage() {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <a
+              <Link
                 href="/post"
                 className="rounded-full bg-ember px-6 py-3 text-sm font-semibold text-white shadow-glow transition hover:translate-y-[-1px]"
               >
                 Create bounty
-              </a>
+              </Link>
+              <Link
+                href="/bounties"
+                className="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/90 backdrop-blur transition hover:bg-white/10"
+              >
+                Browse bounties
+              </Link>
               <a
                 href="#checklist"
                 className="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/90 backdrop-blur transition hover:bg-white/10"
@@ -91,7 +97,7 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <section id="checklist" className="mt-16 grid gap-6 md:grid-cols-2">
+        <section id="checklist" className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           <div className="rounded-3xl border border-white/10 bg-white/6 p-6 backdrop-blur">
             <p className="text-sm uppercase tracking-[0.25em] text-white/50">Now</p>
             <h3 className="mt-2 text-2xl font-semibold">What we’re building first</h3>
@@ -118,6 +124,21 @@ export default async function HomePage() {
               className="mt-6 inline-flex rounded-full border border-white/12 bg-white/8 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/12"
             >
               Open `/post`
+            </Link>
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-black/10 to-white/5 p-6 backdrop-blur">
+            <p className="text-sm uppercase tracking-[0.25em] text-white/50">Worker page</p>
+            <h3 className="mt-2 text-2xl font-semibold">Claim and submit flow</h3>
+            <p className="mt-4 max-w-xl text-sm leading-7 text-white/72">
+              Workers should start from the bounty board, open any live task, then
+              claim it, submit the work, and wait for the Mira verdict before payout.
+            </p>
+            <Link
+              href="/bounties"
+              className="mt-6 inline-flex rounded-full border border-white/12 bg-white/8 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/12"
+            >
+              Open `/bounties`
             </Link>
           </div>
         </section>
