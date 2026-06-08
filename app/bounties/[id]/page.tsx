@@ -4,6 +4,8 @@ import { readBounty } from "@/lib/bounty-repository";
 import { BountyActions } from "@/components/bounty-actions";
 import { MiraVerificationPanel } from "@/components/mira-verification-panel";
 import { PaymentReleasePanel } from "@/components/payment-release-panel";
+import { WalletConnectButton } from "@/components/wallet-connect-button";
+import { WalletState } from "@/components/wallet-state";
 
 export default async function BountyDetailPage({ params }: { params: { id: string } }) {
   const bounty = await readBounty(params.id);
@@ -15,13 +17,19 @@ export default async function BountyDetailPage({ params }: { params: { id: strin
   return (
     <main className="min-h-screen bg-hero-grid px-6 py-12 text-white lg:px-10">
       <div className="mx-auto max-w-4xl">
-        <div className="mb-6 flex items-center justify-between">
-          <Link href="/bounties" className="text-sm text-white/60 underline underline-offset-4">
-            Back to bounties
-          </Link>
-          <span className="rounded-full bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-white/60">
-            {bounty.status}
-          </span>
+        <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-center justify-between gap-4">
+            <Link href="/bounties" className="text-sm text-white/60 underline underline-offset-4">
+              Back to bounties
+            </Link>
+            <span className="rounded-full bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-white/60">
+              {bounty.status}
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <WalletState />
+            <WalletConnectButton />
+          </div>
         </div>
 
         <div className="space-y-6 rounded-3xl border border-white/10 bg-white/6 p-6 backdrop-blur">

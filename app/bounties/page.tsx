@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { listBounties } from "@/lib/bounty-repository";
+import { WalletConnectButton } from "@/components/wallet-connect-button";
+import { WalletState } from "@/components/wallet-state";
 
 export default async function BountiesPage() {
   const bounties = await listBounties();
@@ -7,17 +9,25 @@ export default async function BountiesPage() {
   return (
     <main className="min-h-screen bg-hero-grid px-6 py-12 text-white lg:px-10">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8 flex items-center justify-between gap-4">
+        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.25em] text-white/50">Bounty board</p>
             <h1 className="mt-2 text-4xl font-semibold">Open bounties</h1>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-white/70">
+              Workers should connect a wallet here first, then open any bounty to claim
+              it and submit the finished work.
+            </p>
           </div>
-          <Link
-            href="/post"
-            className="rounded-full bg-ember px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:translate-y-[-1px]"
-          >
-            New bounty
-          </Link>
+          <div className="flex flex-wrap items-center gap-3">
+            <WalletState />
+            <WalletConnectButton />
+            <Link
+              href="/post"
+              className="rounded-full bg-ember px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:translate-y-[-1px]"
+            >
+              New bounty
+            </Link>
+          </div>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
